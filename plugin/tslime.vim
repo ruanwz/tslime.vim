@@ -26,7 +26,8 @@ function! s:tmux_target()
 endfunction
 
 function! s:set_tmux_buffer(text)
-  call system("tmux set-buffer '" . substitute(a:text, "'", "\'", 'g') . "'" )
+  "call system("tmux set-buffer '" . substitute(a:text, "'", "\'", 'g') . "'" )
+  call system("tmux set-buffer '" . substitute(a:text, "'", "'\\\\''", 'g') . "'" )
 endfunction
 
 function! SendToTmux(text)
