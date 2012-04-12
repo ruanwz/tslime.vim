@@ -15,10 +15,10 @@ function! Send_to_Tmux(text)
     call <SID>Tmux_Vars()
   end
 
-  let oldbuffer = system("tmux show-buffer")
+  "let oldbuffer = system("tmux show-buffer")
   call <SID>set_tmux_buffer(a:text)
   call system("tmux paste-buffer -t " . s:tmux_target())
-  call <SID>set_tmux_buffer(oldbuffer)
+  "call <SID>set_tmux_buffer(oldbuffer)
 endfunction
 
 function! s:tmux_target()
@@ -26,7 +26,7 @@ function! s:tmux_target()
 endfunction
 
 function! s:set_tmux_buffer(text)
-  call system("tmux set-buffer '" . substitute(a:text, "'", "'\\\\''", 'g') . "'" )
+  call system("tmux set-buffer '" . substitute(a:text, "'", "\'", 'g') . "'" )
 endfunction
 
 function! SendToTmux(text)
@@ -52,17 +52,17 @@ endfunction
 function! s:Tmux_Vars()
   let g:tmux_sessionname = ''
   while g:tmux_sessionname == ''
-    let g:tmux_sessionname = input("session name: ", "", "custom,Tmux_Session_Names")
+    let g:tmux_sessionname = input("session name: ", "0")
   endwhile
-  let g:tmux_windowname = substitute(input("window name: ", "", "custom,Tmux_Window_Names"), ":.*$" , '', 'g')
-  let g:tmux_panenumber = input("pane number: ", "", "custom,Tmux_Pane_Numbers")
+  let g:tmux_windowname = input("window name: ", "1")
+  let g:tmux_panenumber = input("pane number: ", "1")
 
   if g:tmux_windowname == ''
-    let g:tmux_windowname = '0'
+    let g:tmux_windowname = '1'
   endif
 
   if g:tmux_panenumber == ''
-    let g:tmux_panenumber = '0'
+    let g:tmux_panenumber = '1'
   endif
 endfunction
 
